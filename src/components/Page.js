@@ -6,11 +6,16 @@ function Page() {
     price: "",
     date: new Date(),
   });
+  const [expDataList, setExpDataList] = useState([])
 
+  const submitData = () =>  {
+    setExpDataList ([...expDataList, expData])
+    console.log(expDataList)
+  }
   // GEt data from form for submit data
   const handleSubmit = (event) =>{
     event.preventDefault();
-    // submitData();
+    submitData();
     // setExpData("");
   }
 
@@ -29,7 +34,7 @@ function Page() {
       }
       case "date":
         {
-        setExpData({...expData, "date": event.target.value})
+        setExpData({...expData, "date": Date(event.target.value)})
         break;
       }
       default:
@@ -50,7 +55,8 @@ function Page() {
         <h1 class="text-4xl font-medium">Expense Tracker</h1>
         <p class="mt-3">Add an expense</p>
     
-        <form action="https://api.web3forms.com/submit" class="mt-10">
+        <form action="https://api.web3forms.com/submit" class="mt-10"
+        onSubmit={handleSubmit}>
         
         {/* <!-- This is a working contact form. Get your free access key from: https://web3forms.com/  --> */}
     
