@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
 
 function Page() {
-  const [expData, setExpData] = useState({})
+  const [expData, setExpData] = useState({
+    message: "",
+    price: "",
+    date: new Date(),
+  });
 
   // GEt data from form for submit data
   const handleSubmit = (event) =>{
@@ -11,7 +15,27 @@ function Page() {
   }
 
   function handleChange (event) {
-    console.log(event.target.value)
+    switch(event.target.name) 
+    {
+      case "message":
+        {
+        setExpData({...expData, "message": event.target.value})
+        break;
+      }
+      case "price":
+        {
+        setExpData({...expData, "price": event.target.value})
+        break;
+      }
+      case "date":
+        {
+        setExpData({...expData, "date": event.target.value})
+        break;
+      }
+      default:
+        break;
+    }
+    console.log(expData)
   }
 
 
@@ -73,7 +97,7 @@ function Page() {
             </div>
 
           </div>
-          <button type="submit" class="mt-5 rounded-md bg-black px-10 py-2 text-white">Send Message</button>
+          <button type="submit" class="mt-5 rounded-md bg-black px-10 py-2 text-white">ADD</button>
         </form>
       </div>
     </div>
