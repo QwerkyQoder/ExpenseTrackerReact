@@ -4,6 +4,7 @@ function Page() {
   const [expData, setExpData] = useState({
     message: "",
     price: "",
+    curr: "",
     date: "",
   });
   const [expDataList, setExpDataList] = useState([])
@@ -42,6 +43,13 @@ useEffect(() => {
       case "price":
         {
         setExpData({...expData, "price": event.target.value})
+        break;
+      }
+      case "currency":
+        {
+          console.log(event.target.name)
+          console.log(event.target.value)
+        setExpData({...expData, "curr": event.target.value})
         break;
       }
       case "date":
@@ -96,11 +104,13 @@ useEffect(() => {
                          onChange={handleChange}/>
                         <div class="absolute inset-y-0 right-0 flex items-center">
                         <label for="currency" class="sr-only">Currency</label>
-                        <select id="currency" name="currency" class="h-full rounded-md border-transparent bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                            <option>USD</option>
-                            <option>CAD</option>
-                            <option>EUR</option>
-                            <option>INR</option>
+                        <select id="currency" name="currency" class="h-full rounded-md border-transparent bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        value={expData.curr}
+                        onChange={handleChange}>
+                            <option id='1' value='USD'>USD</option>
+                            <option id='2' value='CAD'>CAD</option>
+                            <option id='3' value='EUR'>EUR</option>
+                            <option id='4' value='INR'>INR</option>
                         </select>
                         </div>
                     </div>
@@ -136,7 +146,7 @@ useEffect(() => {
         expDataList && expDataList.map((exp) => (
           <tr key={exp._id}>
             <td class="border border-slate-700 ...">{exp.message}</td>
-            <td class="border border-slate-700 ...">{exp.price}</td>
+            <td class="border border-slate-700 ...">{exp.price} {exp.curr}</td>
             <td class="border border-slate-700 ...">{exp.date}</td>
           </tr>
         ))
