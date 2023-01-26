@@ -1,12 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 function Page() {
   const [expData, setExpData] = useState({
     message: "",
     price: "",
-    date: new Date(),
+    date: "",
   });
   const [expDataList, setExpDataList] = useState([])
+
+ const getdata = () => {
+    if(expDataList.length > 0) {
+      // setTodoData(resp.data)
+    }
+  }  
+
+// Avoid aync await inside USeEffect
+useEffect(() => {
+  getdata();
+});
+
 
   const submitData = () =>  {
     setExpDataList ([...expDataList, expData])
@@ -34,7 +46,8 @@ function Page() {
       }
       case "date":
         {
-        setExpData({...expData, "date": Date(event.target.value)})
+          console.log(event.target.value)
+        setExpData({...expData, "date": event.target.value})
         break;
       }
       default:
@@ -107,6 +120,32 @@ function Page() {
         </form>
       </div>
     </div>
+
+  {/* TABLE */}
+  <div className='flex flex-col justify-center items-center mb-10'>
+  <table class="border-collapse border border-slate-500 ">
+    <thead >
+      <tr>
+        <th class="border border-slate-600 ...">Expense</th>
+        <th class="border border-slate-600 ...">Amount</th>
+        <th class="border border-slate-600 ...">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        expDataList && expDataList.map((exp) => (
+          <tr key={exp._id}>
+            <td class="border border-slate-700 ...">{exp.message}</td>
+            <td class="border border-slate-700 ...">{exp.price}</td>
+            <td class="border border-slate-700 ...">{exp.date}</td>
+          </tr>
+        ))
+      }
+      
+    </tbody>
+  </table>
+  </div>
+  {/* END */}
     </div>
   )
 }
