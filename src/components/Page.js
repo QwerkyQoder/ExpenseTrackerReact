@@ -8,6 +8,7 @@ function Page() {
     date: "",
   });
   const [expDataList, setExpDataList] = useState([]);
+  const [totalexp, setTotalExp] = useState(0);
 
 // Avoid aync await inside USeEffect
 useEffect(() => {
@@ -64,6 +65,14 @@ useEffect(() => {
     console.log(expData)
   }
 
+  const handleTotal = () => {
+    const result = expDataList.reduce(function(sum, ele) { 
+      return sum + Number(ele.price);
+    }, 0)
+    console.log(result)
+    setTotalExp(result)
+    return(<p>{totalexp}</p>)
+  }
 
   return (
     <div>
@@ -157,6 +166,9 @@ useEffect(() => {
       
     </tbody>
   </table>
+  <p></p>
+  <button class="mt-5 rounded-md bg-black px-10 py-2 text-white"
+  onClick={handleTotal}>Total Expense</button>
   </div>
   {/* END */}
     </div>
