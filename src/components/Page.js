@@ -7,29 +7,29 @@ function Page() {
     curr: "",
     date: "",
   });
-  const [expDataList, setExpDataList] = useState([])
-
- const getdata = () => {
-    if(expDataList.length > 0) {
-      // setTodoData(resp.data)
-    }
-  }  
+  const [expDataList, setExpDataList] = useState([]);
 
 // Avoid aync await inside USeEffect
 useEffect(() => {
-  getdata();
-});
+}, []);
 
 
   const submitData = () =>  {
-    setExpDataList ([...expDataList, expData])
+    console.log(expData)
+    setExpDataList (expDataList => [...expDataList, {...expData}])
     console.log(expDataList)
   }
   // GEt data from form for submit data
   const handleSubmit = (event) =>{
     event.preventDefault();
     submitData();
-    // setExpData("");
+    setExpData({
+      message: "",
+      price: "",
+      curr: "",
+      date: "",
+    });
+    console.log(expDataList)
   }
 
   function handleChange (event) {
@@ -84,9 +84,9 @@ useEffect(() => {
           <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE" /> 
           <div class="grid gap-6 sm:grid-cols-2">
           <div class="relative z-0 col-span-2">
-              <textarea name="message" rows="2" class="peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" placeholder=" "
+              <input type="text" name="message" rows="2" class="peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" placeholder=" "
               value={expData.name}
-              onChange={handleChange}></textarea >
+              onChange={handleChange}/>
               <label class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 peer-focus:dark:text-blue-500">Expense Description</label>
             </div>
             
@@ -107,6 +107,7 @@ useEffect(() => {
                         <select id="currency" name="currency" class="h-full rounded-md border-transparent bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         value={expData.curr}
                         onChange={handleChange}>
+                            <option id='0' value=' '>Currency</option>
                             <option id='1' value='USD'>USD</option>
                             <option id='2' value='CAD'>CAD</option>
                             <option id='3' value='EUR'>EUR</option>
@@ -138,15 +139,17 @@ useEffect(() => {
       <tr>
         <th class="border border-slate-600 ...">Expense</th>
         <th class="border border-slate-600 ...">Amount</th>
+        <th class="border border-slate-600 ...">Currency</th>
         <th class="border border-slate-600 ...">Date</th>
       </tr>
     </thead>
     <tbody>
       {
-        expDataList && expDataList.map((exp) => (
-          <tr key={exp._id}>
+        expDataList && expDataList.map((exp, ind) => (
+          <tr key={ind}>
             <td class="border border-slate-700 ...">{exp.message}</td>
-            <td class="border border-slate-700 ...">{exp.price} {exp.curr}</td>
+            <td class="border border-slate-700 ...">{exp.price}</td>
+            <td class="border border-slate-700 ..."> {exp.curr}</td>
             <td class="border border-slate-700 ...">{exp.date}</td>
           </tr>
         ))
