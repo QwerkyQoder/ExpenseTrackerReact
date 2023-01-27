@@ -10,14 +10,19 @@ function Page() {
   const [expDataList, setExpDataList] = useState([]);
   const [totalexp, setTotalExp] = useState(0);
 
-// Avoid aync await inside USeEffect
-useEffect(() => {
-}, []);
+  // Avoid aync await inside USeEffect
+  useEffect(() => {
+  }, [expData, expDataList, totalexp]);
 
 
   const submitData = () =>  {
     console.log(expData)
     setExpDataList (expDataList => [...expDataList, {...expData}])
+    const result = expDataList.reduce(function(sum, ele) { 
+      return sum + Number(ele.price);
+    }, 0)
+    console.log(result)
+    setTotalExp(result)
     console.log(expDataList)
   }
   // GEt data from form for submit data
@@ -63,15 +68,6 @@ useEffect(() => {
         break;
     }
     console.log(expData)
-  }
-
-  const handleTotal = () => {
-    const result = expDataList.reduce(function(sum, ele) { 
-      return sum + Number(ele.price);
-    }, 0)
-    console.log(result)
-    setTotalExp(result)
-    return(<p>{totalexp}</p>)
   }
 
   return (
@@ -163,12 +159,18 @@ useEffect(() => {
           </tr>
         ))
       }
+      <tr>
+            <th class="border border-slate-700 ...">Total</th>
+            <th class="border border-slate-700 ...">{totalexp}</th>
+            {/* <td class="border border-slate-700 ..."> </td>
+            <td class="border border-slate-700 ..."></td> */}
+          </tr>
       
     </tbody>
   </table>
-  <p></p>
+  {/* <p></p>
   <button class="mt-5 rounded-md bg-black px-10 py-2 text-white"
-  onClick={handleTotal}>Total Expense</button>
+  onClick={handleTotal}>Total Expense</button> */}
   </div>
   {/* END */}
     </div>
