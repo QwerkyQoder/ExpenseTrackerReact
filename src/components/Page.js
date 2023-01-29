@@ -10,19 +10,30 @@ function Page() {
   const [expDataList, setExpDataList] = useState([]);
   const [totalexp, setTotalExp] = useState(0);
 
+  const getTotalexp =() => {
+    const result = expDataList.reduce(function(sum, ele) { 
+      return sum + Number(ele.price);
+    }, 0)
+    setTotalExp(result)
+  }
+
   // Avoid aync await inside USeEffect
   useEffect(() => {
-  }, [expData, expDataList, totalexp]);
+    getTotalexp()
+  }, [expData, expDataList]);
 
 
   const submitData = () =>  {
     console.log(expData)
+
+  
+    
+
     setExpDataList (expDataList => [...expDataList, {...expData}])
-    const result = expDataList.reduce(function(sum, ele) { 
-      return sum + Number(ele.price);
-    }, 0)
-    console.log(result)
-    setTotalExp(result)
+    
+    
+    console.log(totalexp)
+    
     console.log(expDataList)
   }
   // GEt data from form for submit data
